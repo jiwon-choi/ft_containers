@@ -95,3 +95,7 @@ Temporary Items
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,macos,visualstudiocode
+
+log
+ft_containers
+containers_test
