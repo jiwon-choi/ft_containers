@@ -306,7 +306,6 @@ namespace ft {
         _ptr = _alloc.allocate(n);
         _capacity = n;
       }
-      (void)val;
       for (size_type i = 0; i < n; i++)
         push_back(val);
     }
@@ -339,14 +338,14 @@ namespace ft {
     */
     iterator insert(iterator position, const value_type& val) {
       reserve(_size + 1);
-      move_back(position);
+      move_backward(position);
       _alloc.construct(&(*position), val);
       _size++;
       return (position);
     }
     void insert(iterator position, size_type n, const value_type& val) {
       reserve(_size + n);
-      move_back(position, n);
+      move_backward(position, n);
       for (size_type i = 0; i < n; i++)
         _alloc.construct(&(*(position + i)), val);
       _size += n;
@@ -354,10 +353,9 @@ namespace ft {
     template <class InputIterator>
     void insert(iterator position, InputIterator first, InputIterator last) {
       // typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
-        std::cout << "insert (3)" << '\n';
         size_type n = last - first;
         reserve(_size + n);
-        move_back(position, n);
+        move_backward(position, n);
         for (size_type i = 0; i < n; i++)
           _alloc.construct(&(*(position + i)), *(first + i));
         _size += n;
@@ -435,12 +433,14 @@ namespace ft {
     }
 
 
-    void move_back(iterator position, size_type n = 1) {
-      std::cout << "move_back 내부 시작" << *position << " " << n << '\n';
-      if (position == end()) return ;
-      move_back(position + n, n);
-      _alloc.construct(&(*(position + n)), *position);
-      std::cout << "move_back 내부 끝" << '\n';
+    void move_backward(iterator position, size_type n = 1) {
+      // if (position == end()) return ;
+      //   move_backward(position + 1, n);
+      // _alloc.construct(&(*(position + n)), *position);
+
+      for (iterator it = end(); it != position; it--) {
+        _alloc.construct(&(*it), *(it - n));
+      }
     }
   };
 

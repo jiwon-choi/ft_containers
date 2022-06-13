@@ -7,11 +7,11 @@ namespace ft {
   template <typename T>
   class random_access_iterator : public iterator<random_access_iterator_tag, T> {
     public:
-    typedef typename iterator<random_access_iterator_tag, T>::value_type        value_type;
-    typedef typename iterator<random_access_iterator_tag, T>::difference_type   difference_type;
-    typedef typename iterator<random_access_iterator_tag, T>::Pointer           pointer;
-    typedef typename iterator<random_access_iterator_tag, T>::Reference         reference;
-    typedef typename iterator<random_access_iterator_tag, T>::Category          iterator_category;
+    typedef typename iterator<random_access_iterator_tag, T>::value_type          value_type;
+    typedef typename iterator<random_access_iterator_tag, T>::difference_type     difference_type;
+    typedef typename iterator<random_access_iterator_tag, T>::pointer             pointer;
+    typedef typename iterator<random_access_iterator_tag, T>::reference           reference;
+    typedef typename iterator<random_access_iterator_tag, T>::iterator_category   iterator_category;
 
     private:
     pointer _ptr;
@@ -19,7 +19,7 @@ namespace ft {
     public:
     random_access_iterator(void)                              : _ptr() {}
     random_access_iterator(pointer ptr)                       : _ptr(ptr) {}
-    random_access_iterator(const random_access_iterator& ref) : _ptr(ref._ptr) {}
+    random_access_iterator(const random_access_iterator& ref) : _ptr(ref.base()) {}
 
     random_access_iterator& operator=(const random_access_iterator& ref) {
       if (this != &ref)
@@ -88,7 +88,7 @@ namespace ft {
 
   template <typename T>
   typename random_access_iterator<T>::difference_type operator-(const random_access_iterator<T>& lhs, const random_access_iterator<T>& rhs) {
-    return (rhs.base() - lhs.base());
+    return (lhs.base() - rhs.base());
   }
 }
 
