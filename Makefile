@@ -1,26 +1,34 @@
-TARGET		= ft_containers
+FT					= ft
+STD					= std
 
-CXX			= c++
-CXXFLAGS	= -Wall -Werror -Wextra -std=c++98
-RM			= rm -rf
+CXX					= c++
+CXXFLAGS		= -Wall -Werror -Wextra -std=c++98
+RM					= rm -rf
 
-SRCS		= test.cpp
+OBJS_DIR		= ./objs/
 
-OBJS		= $(SRCS:.cpp=.o)
+FT_SRCS			= ft.cpp
+STD_SRCS		= std.cpp
+FT_OBJS			= $(addprefix $(OBJS_DIR), $(FT_SRCS:.cpp=.o))
+STD_OBJS		= $(addprefix $(OBJS_DIR), $(STD_SRCS:.cpp=.o))
 
-$(TARGET) : $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+all : $(FT) $(STD)
 
-%.o : %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(FT) : $(FT_OBJS)
+	$(CXX) -o $(FT) $(FT_OBJS)
 
-all : $(TARGET)
+$(STD) : $(STD_OBJS)
+	$(CXX) -o $(STD) $(STD_OBJS)
+
+$(OBJS_DIR)%.o : %.cpp
+	@mkdir -p $(OBJS_DIR)
+	$(CXX) $(CXXFLAGS) -I. -c $< -o $@
 
 clean :
-	$(RM) $(OBJS)
+	$(RM) $(OBJS_DIR)
 
 fclean : clean
-	$(RM) $(TARGET)
+	$(RM) $(FT) $(STD)
 
 re : clean all
 
