@@ -26,13 +26,13 @@ int main(void) {
   //   std::cout << *rit << ' ';
   // std::cout << "\n\n";
 
-  std::vector<int> stdvec;
-  for (int i = 0; i < 4; i++)
-    stdvec.push_back(i + 300);
-  stdvec.pop_back();
-  for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); it++)
-    std::cout << *it << ' ';
-  std::cout << "\n" << *stdvec.begin() << " " << *stdvec.end() << "\n\n";
+  // std::vector<int> stdvec;
+  // for (int i = 0; i < 4; i++)
+  //   stdvec.push_back(i + 300);
+  // stdvec.pop_back();
+  // for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); it++)
+  //   std::cout << *it << ' ';
+  // std::cout << "\n" << *stdvec.begin() << " " << *stdvec.end() << "\n\n";
   
   
 
@@ -56,11 +56,8 @@ int main(void) {
             << "capacity : " << vec1.capacity() << "\n\n";
 
   vec1.insert(vec1.begin() + 3, 9999);
-  // vec1.insert(vec1.begin() + 3, 9999);
-  // vec1.insert(vec1.begin() + 3, 9999);
-  // vec1.insert(vec1.begin() + 3, 9999);
-
-  // vec1.insert(vec1.begin() + 3, 9999);
+  vec1.insert(vec1.end() - 1, 4, 1010);
+  // vec1.insert(vec1.end() - 1, vec1.begin(), vec1.end());
 
   ft::vector<int>::iterator it;
   std::cout << "[iterator]" << '\n';
