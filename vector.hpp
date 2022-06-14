@@ -337,24 +337,30 @@ namespace ft {
     ** 지정된 위치에 새 element를 삽입힌다.
     */
     iterator insert(iterator position, const value_type& val) {
+      size_type idx = position - begin();
       reserve(_size + 1);
+      position = begin() + idx;
       move_backward(position);
       _alloc.construct(&(*position), val);
       _size++;
       return (position);
     }
     void insert(iterator position, size_type n, const value_type& val) {
+      size_type idx = position - begin();
       reserve(_size + n);
+      position = begin() + idx;
       move_backward(position, n);
       for (size_type i = 0; i < n; i++)
         _alloc.construct(&(*(position + i)), val);
       _size += n;
     }
     template <class InputIterator>
-    void insert(iterator position, InputIterator first, InputIterator last) {
-      // typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
+    void insert(iterator position, InputIterator first, InputIterator last,
+      typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
+        size_type idx = position - begin();
         size_type n = last - first;
         reserve(_size + n);
+        position = begin() + idx;
         move_backward(position, n);
         for (size_type i = 0; i < n; i++)
           _alloc.construct(&(*(position + i)), *(first + i));
@@ -434,13 +440,13 @@ namespace ft {
 
 
     void move_backward(iterator position, size_type n = 1) {
-      // if (position == end()) return ;
-      //   move_backward(position + 1, n);
-      // _alloc.construct(&(*(position + n)), *position);
+      if (position == end()) return ;
+        move_backward(position + 1, n);
+      _alloc.construct(&(*(position + n)), *position);
 
-      for (iterator it = end(); it != position; it--) {
-        _alloc.construct(&(*it), *(it - n));
-      }
+      // for (iterator it = end(); it != position; it--) {
+      //   _alloc.construct(&(*it), *(it - n));
+      // }
     }
   };
 
