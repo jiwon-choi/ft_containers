@@ -4,6 +4,8 @@
 # include <memory> // std::allocator
 # include "random_access_iterator.hpp"
 # include "reverse_iterator.hpp"
+# include "utils/utils.hpp"
+# include "utils/is_integral.hpp"
 
 namespace ft {
   template < class T, class Alloc = std::allocator<T> >
@@ -61,10 +63,12 @@ namespace ft {
     ** range[first, last]만큼의 element를 가지는 컨테이너를 생성하고, 각 element는 range와 동일한 순서로 구성된다.
     */
     template <class InputIterator>
-    vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+    vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
       : _alloc(alloc), _size(0) {
         difference_type n = last - first;
         _ptr = _alloc.allocate(n);
+        _capacity = n;
         for (; first != last; first++)
           push_back(*first);
       }
@@ -286,18 +290,19 @@ namespace ft {
     ** 벡터에 새 컨텐츠를 할당해 데이터를 바꾸고, 그에 따라 size를 수정한다.
     */
     template <class InputIterator>
-    void assign(InputIterator first, InputIterator last) {
-      clear();
-      size_type n = last - first;
-      if (n == 0) return ;
-      if (n > _capacity) {
-        _alloc.deallocate(_ptr, _capacity);
-        _ptr = _alloc.allocate(n);
-        _capacity = n;
+    void assign(InputIterator first, InputIterator last,
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
+        clear();
+        size_type n = last - first;
+        if (n == 0) return ;
+        if (n > _capacity) {
+          _alloc.deallocate(_ptr, _capacity);
+          _ptr = _alloc.allocate(n);
+          _capacity = n;
+        }
+        for (; first != last; first++)
+          push_back(*first);
       }
-      for (; first != last; first++)
-        push_back(*first);
-    }
     void assign(size_type n, const value_type& val) {
       clear();
       if (n == 0) return ;
@@ -356,7 +361,7 @@ namespace ft {
     }
     template <class InputIterator>
     void insert(iterator position, InputIterator first, InputIterator last,
-      typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
         size_type idx = position - begin();
         size_type n = last - first;
         reserve(_size + n);
@@ -456,25 +461,35 @@ namespace ft {
   /*                                                              */
   /* ============================================================ */
 
-  // template <class T, class Alloc>
-  // bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
-  // template <class T, class Alloc>
-  // bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
-  // template <class T, class Alloc>
-  // bool operator< (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
-  // template <class T, class Alloc>
-  // bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
-  // template <class T, class Alloc>
-  // bool operator> (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
-  // template <class T, class Alloc>
-  // bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {}
+  template <class T, class Alloc>
+  bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (lhs.size() == rhs.size() && equal(lhs.begin(), lhs.end(), rhs.begin()));
+  }
+  template <class T, class Alloc>
+  bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (!(lhs == rhs));
+  }
+  template <class T, class Alloc>
+  bool operator< (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+  }
+  template <class T, class Alloc>
+  bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (!(lhs > rhs));
+  }
+  template <class T, class Alloc>
+  bool operator> (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (rhs < lhs);
+  }
+  template <class T, class Alloc>
+  bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (!(lhs < rhs));
+  }
 
-  // template <class T, class Alloc>
-  // void swap(vector<T, Alloc>& x, vector<T, Alloc>& y) {}
-
-  // /* class template specialization */
-  // template < class T, class Alloc = allocator<T> > class vector;
-  // template <class Alloc> class vector<bool, Alloc>;
+  template <class T, class Alloc>
+  void swap(vector<T, Alloc>& x, vector<T, Alloc>& y) {
+    x.swap(y);
+  }
 }
 
 #endif
