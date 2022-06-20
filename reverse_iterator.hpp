@@ -22,6 +22,10 @@ namespace ft {
     template <class Iter>
     reverse_iterator(const reverse_iterator<Iter>& rev_it) : _ptr(rev_it.base()) {}
 
+    operator reverse_iterator<const iterator_type>() const {
+      return reverse_iterator<const iterator_type>(_ptr);
+    }
+
     iterator_type base(void) const { return (_ptr); }
 
     reference operator*(void) const {

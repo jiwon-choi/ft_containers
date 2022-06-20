@@ -13,13 +13,17 @@ namespace ft {
     typedef typename iterator<random_access_iterator_tag, T>::reference           reference;
     typedef typename iterator<random_access_iterator_tag, T>::iterator_category   iterator_category;
 
-    private:
+    protected:
     pointer _ptr;
 
     public:
-    random_access_iterator(void)                              : _ptr() {}
+    random_access_iterator(void)                              : _ptr(nullptr) {}
     random_access_iterator(pointer ptr)                       : _ptr(ptr) {}
-    random_access_iterator(const random_access_iterator& ref) : _ptr(ref.base()) {}
+    random_access_iterator(const random_access_iterator<T>& ref) : _ptr(ref._ptr) {}
+
+    operator random_access_iterator<const value_type>() const {
+      return random_access_iterator<const value_type>(_ptr);
+    }
 
     random_access_iterator& operator=(const random_access_iterator& ref) {
       if (this != &ref)
@@ -33,7 +37,7 @@ namespace ft {
 
     reference operator* (void) const              { return (*_ptr); }
     pointer   operator->(void) const              { return (&(operator*())); }
-    reference operator[](difference_type n) const { return (base()[n]); }
+    reference operator[](difference_type n) const { return (_ptr[n]); }
 
     random_access_iterator operator+(difference_type n) const { return (_ptr + n); }
     random_access_iterator operator-(difference_type n) const { return (_ptr - n); }
@@ -65,7 +69,6 @@ namespace ft {
       _ptr -= n;
       return (*this);
     }
-
   };
 
   template <typename T>
