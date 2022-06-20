@@ -13,6 +13,7 @@
 #endif
 
 #include <stdlib.h>
+#include <iterator>
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
@@ -112,5 +113,9 @@ int main(int argc, char** argv) {
 		std::cout << *it;
 	}
 	std::cout << std::endl;
+
+
+  std::vector<int> vct;
+  std::vector<int>::iterator it;
 	return (0);
 }
