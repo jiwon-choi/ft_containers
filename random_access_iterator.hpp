@@ -17,8 +17,8 @@ namespace ft {
     pointer _ptr;
 
     public:
-    random_access_iterator(void)                              : _ptr(nullptr) {}
-    random_access_iterator(pointer ptr)                       : _ptr(ptr) {}
+    random_access_iterator(void)                                 : _ptr(nullptr) {}
+    random_access_iterator(pointer ptr)                          : _ptr(ptr) {}
     random_access_iterator(const random_access_iterator<T>& ref) : _ptr(ref._ptr) {}
 
     operator random_access_iterator<const value_type>() const {
