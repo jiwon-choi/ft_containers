@@ -1,11 +1,10 @@
 #ifndef VECTOR_HPP_
 # define VECTOR_HPP_
 
-# include <memory> // std::allocator
-# include "random_access_iterator.hpp"
-# include "reverse_iterator.hpp"
-# include "utils/utils.hpp"
-# include "utils/is_integral.hpp"
+# include <memory>  // std::allocator
+# include "utils/iterator.hpp"
+# include "utils/algorithm.hpp"
+# include "utils/type_traits.hpp"
 
 namespace ft {
   template < class T, class Alloc = std::allocator<T> >

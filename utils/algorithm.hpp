@@ -1,11 +1,12 @@
-#ifndef UTILS_HPP_
-# define UTILS_HPP_
+#ifndef ALGORITHM_HPP_
+# define ALGORITHM_HPP_
+
+/*
+** equal
+** lexicographical_compare
+*/
 
 namespace ft {
-
-  /* enable_if */
-  template <bool Cond, class T = void> struct enable_if {};
-  template <class T> struct enable_if<true, T> { typedef T type; };
 
   /* equal */
   template <class InputIterator1, class InputIterator2>

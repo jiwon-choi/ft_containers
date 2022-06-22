@@ -1,19 +1,24 @@
-#ifndef IS_INTEGRAL_HPP_
-# define IS_INTEGRAL_HPP_
+#ifndef TYPE_TRAITS_HPP_
+# define TYPE_TRAITS_HPP_
+
+/*
+** is_integral (integral_constant, true_type, false_type)
+** enable_if
+*/
 
 namespace ft {
+
+  /* integral_constant */
   template <class T, T v>
   struct integral_constant {
-    // static constexpr T value = v;
     static const T                    value = v;
     typedef T                         value_type;
     typedef integral_constant<T, v>   type;
-    // constexpr operator value_type() { return v; }
   };
-
   typedef integral_constant<bool, true>   true_type;
   typedef integral_constant<bool, false>  false_type;
 
+  /* is_integral */
   template <class T> struct is_integral : public false_type {};
 
   template<> struct is_integral<bool> : public true_type {};
@@ -44,6 +49,9 @@ namespace ft {
   template<> struct is_integral<const unsigned long int> : public true_type {};
   template<> struct is_integral<const unsigned long long int> : public true_type {};
 
+  /* enable_if */
+  template <bool Cond, class T = void> struct enable_if {};
+  template <class T> struct enable_if<true, T> { typedef T type; };
 }
 
 #endif
