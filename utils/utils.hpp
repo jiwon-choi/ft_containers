@@ -48,9 +48,6 @@ namespace ft {
       }
       return ((first1 == last1) && (first2 != last2));
     }
-
-  /* std::pair */
-  /* std::make_pair */
 }
 
 #endif
