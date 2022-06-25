@@ -101,3 +101,6 @@ ft_containers
 containers_test
 ft
 std
+ft.cpp
+std.cpp
+.vscode/settings.json
