@@ -442,7 +442,7 @@ namespace ft {
       return (Alloc(_alloc));
     }
 
-
+    private:
     void move_backward(iterator position, size_type n = 1) {
       if (position == end()) return ;
         move_backward(position + 1, n);
