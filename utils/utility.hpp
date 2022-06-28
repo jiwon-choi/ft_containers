@@ -34,7 +34,7 @@ namespace ft {
     pair()                                          : first(first_type()), second(second_type()) {}
     /* Constructor (2) copy */
     template<class U, class V>
-    pair(const pair<U, V>& pr)                      : first(pr.first), second_type(pr.second) {}
+    pair(const pair<U, V>& pr)                      : first(pr.first), second(pr.second) {}
     /* Constructor (3) initialization */
     pair(const first_type& a, const second_type& b) : first(a), second(b) {}
 
