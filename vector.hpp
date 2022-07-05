@@ -63,7 +63,7 @@ namespace ft {
     */
     template <class InputIterator>
     vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL)
       : _alloc(alloc), _size(0) {
         difference_type n = last - first;
         _ptr = _alloc.allocate(n);
@@ -290,7 +290,7 @@ namespace ft {
     */
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last,
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
         clear();
         size_type n = last - first;
         if (n == 0) return ;
@@ -360,7 +360,7 @@ namespace ft {
     }
     template <class InputIterator>
     void insert(iterator position, InputIterator first, InputIterator last,
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
+      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
         size_type idx = position - begin();
         size_type n = last - first;
         reserve(_size + n);
