@@ -87,7 +87,6 @@ namespace ft {
     return (ptr);
   }
 
-  //TODO 이해
   template <typename NodePtr>
   NodePtr get_next_node(NodePtr ptr, NodePtr nil) {
     if (ptr->_right != nil)
@@ -203,7 +202,7 @@ namespace ft {
     typedef tree_iterator<value_type, node_type>                        iterator;
     typedef tree_iterator<const value_type, node_type>                  const_iterator;
     typedef Allocator                                                   allocator_type;
-    typedef typename allocator_type::template rebind<node_type>::other  node_allocator; //TODO
+    typedef typename allocator_type::template rebind<node_type>::other  node_allocator;
     typedef std::allocator_traits<node_allocator>                       node_traits;
     typedef std::size_t                                                 size_type;
     typedef std::ptrdiff_t                                              difference_type;
@@ -273,7 +272,7 @@ namespace ft {
       return (_size);
     }
     size_type max_size() const {
-      return (_alloc.max_size()); //TODO
+      return (_alloc.max_size());
     }
 
     bool empty() const {

@@ -447,10 +447,6 @@ namespace ft {
       if (position == end()) return ;
         move_backward(position + 1, n);
       _alloc.construct(&(*(position + n)), *position);
-
-      // for (iterator it = end(); it != position; it--) {
-      //   _alloc.construct(&(*it), *(it - n));
-      // }
     }
   };
 

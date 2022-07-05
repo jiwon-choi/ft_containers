@@ -21,7 +21,6 @@ namespace ft {
     typedef T                                                             mapped_type;
     typedef pair<const key_type, mapped_type>                             value_type;
     typedef Compare                                                       key_compare;
-    // typedef value_compare; //TODO
     typedef Alloc                                                         allocator_type;
     typedef typename allocator_type::template rebind<value_type>::other   type_allocator;
     typedef std::allocator_traits<type_allocator>                         type_traits;
@@ -159,7 +158,6 @@ namespace ft {
       return (p.first->second);
     }
 
-    // TODO
     mapped_type& at(const key_type& k) {
       iterator it = find(k);
       if (it == end())
@@ -238,7 +236,7 @@ namespace ft {
 
     /* Count elements with a specific key */
     size_type count(const key_type& k) const {
-      return (!(find(k) == end())); // TODO 이해
+      return (!(find(k) == end()));
     }
 
     /* Return iterator to lower bound */
