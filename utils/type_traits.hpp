@@ -28,12 +28,10 @@ namespace ft {
   template<> struct is_integral<short int> : public true_type {};
   template<> struct is_integral<int> : public true_type {};
   template<> struct is_integral<long int> : public true_type {};
-  template<> struct is_integral<long long int> : public true_type {};
   template<> struct is_integral<unsigned char> : public true_type {};
   template<> struct is_integral<unsigned short int> : public true_type {};
   template<> struct is_integral<unsigned int> : public true_type {};
   template<> struct is_integral<unsigned long int> : public true_type {};
-  template<> struct is_integral<unsigned long long int> : public true_type {};
 
   template<> struct is_integral<const bool> : public true_type {};
   template<> struct is_integral<const char> : public true_type {};
@@ -42,12 +40,10 @@ namespace ft {
   template<> struct is_integral<const short int> : public true_type {};
   template<> struct is_integral<const int> : public true_type {};
   template<> struct is_integral<const long int> : public true_type {};
-  template<> struct is_integral<const long long int> : public true_type {};
   template<> struct is_integral<const unsigned char> : public true_type {};
   template<> struct is_integral<const unsigned short int> : public true_type {};
   template<> struct is_integral<const unsigned int> : public true_type {};
   template<> struct is_integral<const unsigned long int> : public true_type {};
-  template<> struct is_integral<const unsigned long long int> : public true_type {};
 
   /* enable_if */
   template <bool Cond, class T = void> struct enable_if {};
