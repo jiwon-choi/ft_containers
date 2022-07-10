@@ -24,8 +24,8 @@ template <class T> class allocator;
   pointer allocate(size_type n, allocator<void>::const_pointer hint=0);
   ```
   value_type 유형이 n개 포함될 수 있을 만큼 충분히 큰 메모리를 할당하고, 첫 번째 요소를 반환한다.
-  표준 allocator는 new 연산자를 한 번 이상 사용하여 메모리를 할당하고, 필요한 만큼 할당할 수 없는 경우 bad_alloc을 throw한다.
-  \*\*hint에 대해 공부해야 함
+  표준 allocator는 new 연산자를 한 번 이상 사용하여 메모리를 할당하고, 필요한 만큼 할당할 수 없는 경우 bad_alloc을 throw한다.  
+  hint에 가까운 메모리 위치에 대한 포인터를 넣어주면 가능한 한 가깝게 새 메모리 블록을 할당하려고 시도한다.
 - deallocate : 할당된 블록을 해제한다.
   ```cpp
   void deallocate(pointer p, size_type n);
@@ -57,3 +57,16 @@ template <class T> class allocator;
   ```cpp
   p->~value_type();
   ```
+
+## Template specializations
+- rebind
+  ```cpp
+  template <> class allocator<void> {
+    public:
+    template <class U> struct rebind { typedef allocator<U> other; };
+  }
+  ```
+  http://egloos.zum.com/sweeper/v/2966785  
+  중첩 구조체 템플릿  
+  allocator에 넘긴 T 타입 이외의 다른 타입에 대한 allocate가 필요한 경우 사용한다. (다른 타입 == 해당 컨테이너에서 요구되는 진정한 할당 타입)
+  
