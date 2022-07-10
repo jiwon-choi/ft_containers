@@ -15,18 +15,18 @@ namespace ft {
     /*                         Member types                         */
     /*                                                              */
     /* ============================================================ */
-    typedef T                                                     value_type;
-    typedef Alloc                                                 allocator_type;
-    typedef typename allocator_type::reference                    reference;                // T&
-    typedef typename allocator_type::const_reference              const_reference;          // const T&
-    typedef typename allocator_type::pointer                      pointer;                  // T*
-    typedef typename allocator_type::const_pointer                const_pointer;            // const T*
-    typedef ft::random_access_iterator<value_type>                iterator;
-    typedef ft::random_access_iterator<const value_type>          const_iterator;
-    typedef ft::reverse_iterator<iterator>                        reverse_iterator;
-    typedef ft::reverse_iterator<const_iterator>                  const_reverse_iterator;
-    typedef typename iterator_traits<iterator>::difference_type   difference_type;          // ptrdiff_t
-    typedef typename allocator_type::size_type                    size_type;                // size_t
+    typedef T                                                         value_type;
+    typedef Alloc                                                     allocator_type;
+    typedef typename allocator_type::reference                        reference;                // T&
+    typedef typename allocator_type::const_reference                  const_reference;          // const T&
+    typedef typename allocator_type::pointer                          pointer;                  // T*
+    typedef typename allocator_type::const_pointer                    const_pointer;            // const T*
+    typedef ft::random_access_iterator<value_type>                    iterator;
+    typedef ft::random_access_iterator<const value_type>              const_iterator;
+    typedef ft::reverse_iterator<iterator>                            reverse_iterator;
+    typedef ft::reverse_iterator<const_iterator>                      const_reverse_iterator;
+    typedef typename ft::iterator_traits<iterator>::difference_type   difference_type;          // ptrdiff_t
+    typedef typename allocator_type::size_type                        size_type;                // size_t
 
     private:
     allocator_type    _alloc;
@@ -63,7 +63,7 @@ namespace ft {
     */
     template <class InputIterator>
     vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+      typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
       : _alloc(alloc), _size(0) {
         difference_type n = last - first;
         _ptr = _alloc.allocate(n);
@@ -290,7 +290,7 @@ namespace ft {
     */
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last,
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
+      typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
         clear();
         size_type n = last - first;
         if (n == 0) return ;
@@ -360,7 +360,7 @@ namespace ft {
     }
     template <class InputIterator>
     void insert(iterator position, InputIterator first, InputIterator last,
-      typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
+      typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
         size_type idx = position - begin();
         size_type n = last - first;
         reserve(_size + n);
@@ -458,7 +458,7 @@ namespace ft {
 
   template <class T, class Alloc>
   bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
-    return (lhs.size() == rhs.size() && equal(lhs.begin(), lhs.end(), rhs.begin()));
+    return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
   }
   template <class T, class Alloc>
   bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
@@ -466,7 +466,7 @@ namespace ft {
   }
   template <class T, class Alloc>
   bool operator< (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
-    return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+    return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
   }
   template <class T, class Alloc>
   bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {

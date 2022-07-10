@@ -5,6 +5,7 @@
 ** NIL
 ** TreeNode
 ** tree_iterator
+** Red-Black tree
 */
 
 # include "utility.hpp"
@@ -37,9 +38,9 @@ namespace ft {
     bool        _is_black;
 
     TreeNode()
-      : _parent(NIL), _left(NIL), _right(NIL), _value(value_type()), _is_black(bool()) {}
+      : _parent(ft::NIL), _left(ft::NIL), _right(ft::NIL), _value(value_type()), _is_black(bool()) {}
     TreeNode(const value_type& value)
-      : _parent(NIL), _left(NIL), _right(NIL), _value(value), _is_black(bool()) {}
+      : _parent(ft::NIL), _left(ft::NIL), _right(ft::NIL), _value(value), _is_black(bool()) {}
     TreeNode(const TreeNode& ref)
       : _parent(ref._parent), _left(ref._left), _right(ref._right), _value(ref._value), _is_black(ref._is_black) {}
     ~TreeNode() {}
@@ -130,7 +131,7 @@ namespace ft {
     node_pointer  _nil;
 
     public:
-    tree_iterator() : _current(NIL), _nil(NIL) {}
+    tree_iterator() : _current(ft::NIL), _nil(ft::NIL) {}
     tree_iterator(node_pointer cur, node_pointer nil) : _current(cur), _nil(nil) {}
     tree_iterator(const tree_iterator& ref) : _current(ref._current), _nil(ref._nil) {}
     ~tree_iterator() {}
@@ -254,6 +255,10 @@ namespace ft {
       return (*this);
     }
 
+    /* ============================================================ */
+    /*                          Iterators                           */
+    /* ============================================================ */
+
     iterator begin() {
       return (iterator(_begin, _nil));
     }
@@ -268,16 +273,25 @@ namespace ft {
       return (const_iterator(_end, _nil));
     }
 
-    size_type size() const {
-      return (_size);
-    }
-    size_type max_size() const {
-      return (_alloc.max_size());
-    }
+    /* ============================================================ */
+    /*                           Capacity                           */
+    /* ============================================================ */
 
     bool empty() const {
       return (_size == 0);
     }
+
+    size_type size() const {
+      return (_size);
+    }
+
+    size_type max_size() const {
+      return (_alloc.max_size());
+    }
+
+    /* ============================================================ */
+    /*                        Element access                        */
+    /* ============================================================ */
 
     ft::pair<iterator, bool> insert(const value_type& value) {
       node_pointer ptr = search_parent(value);
@@ -309,8 +323,7 @@ namespace ft {
       delete_node(position.base());
       return (tmp);
     }
-    template <typename U>
-    size_type erase(const U& value) {
+    size_type erase(const key_type& value) {
       iterator i(find_internal(value), _nil);
       if (i == end())
         return (0);
@@ -343,6 +356,10 @@ namespace ft {
       swap(tmp);
     }
 
+    /* ============================================================ */
+    /*                          Operations                          */
+    /* ============================================================ */
+
     iterator find(const key_type& key) {
       return (iterator(find_internal(key), _nil));
     }
@@ -364,17 +381,24 @@ namespace ft {
       return (const_iterator(upper_bound_internal(key), _nil));
     }
 
-    ft::pair<iterator, iterator> equal_range(const key_type& key) {
-      return (equal_range_internal(key));
-    }
     ft::pair<const_iterator, const_iterator> equal_range(const key_type& key) const {
       return (equal_range_internal(key));
     }
+    ft::pair<iterator, iterator> equal_range(const key_type& key) {
+      return (equal_range_internal(key));
+    }
+
+    /* ============================================================ */
+    /*                          Allocator                           */
+    /* ============================================================ */
 
     allocator_type get_allocator() const {
       return (_alloc);
     }
 
+    /* ============================================================ */
+    /*                   private member function                    */
+    /* ============================================================ */
     private:
     node_pointer get_root() const {
       return (_end->_left);
@@ -408,7 +432,8 @@ namespace ft {
       delete_node(ptr);
     }
 
-    node_pointer search_parent(const value_type& value, node_pointer position = NIL) {
+    node_pointer search_parent(const value_type& value, node_pointer position = ft::NIL) {
+      // position hint가 있을 때
       if (position && position != _end) {
         if (_comp(value, position->_value) && position->_left == _nil) {
           iterator prev = iterator(position, _nil);
@@ -420,6 +445,7 @@ namespace ft {
             return (position);
         }
       }
+      // position hint가 없을 때
       node_pointer cur = get_root();
       node_pointer tmp = _end;
       for (; cur != _nil;) {
@@ -644,8 +670,7 @@ namespace ft {
       ptr->_parent = child;
     }
 
-    template <typename U>
-    node_pointer find_internal(const U& value) const {
+    node_pointer find_internal(const key_type& value) const {
       node_pointer ptr = get_root();
       while (ptr != _nil) {
         if (_comp(value, ptr->_value)) {
@@ -687,8 +712,7 @@ namespace ft {
       return tmp;
     }
 
-    template <typename U>
-    ft::pair<iterator, iterator> equal_range_internal(const U& value) {
+    ft::pair<iterator, iterator> equal_range_internal(const key_type& value) {
       node_pointer ptr = get_root();
       node_pointer tmp = _end;
       while (ptr != _nil) {
@@ -701,13 +725,12 @@ namespace ft {
           if (ptr->_right != _nil) {
             tmp = get_min_node(ptr->_right, _nil);
           }
-          return (make_pair(iterator(ptr, _nil), iterator(tmp, _nil)));
+          return (ft::make_pair(iterator(ptr, _nil), iterator(tmp, _nil)));
         }
       }
-      return (make_pair(iterator(tmp, _nil), iterator(tmp, _nil)));
+      return (ft::make_pair(iterator(tmp, _nil), iterator(tmp, _nil)));
     }
-    template <typename U>
-    ft::pair<const_iterator, const_iterator> equal_range_internal(const U& value) const {
+    ft::pair<const_iterator, const_iterator> equal_range_internal(const key_type& value) const {
       node_pointer ptr = get_root();
       node_pointer tmp = _end;
       while (ptr != _nil) {
