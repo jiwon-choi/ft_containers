@@ -29,6 +29,19 @@ namespace ft {
     /* Constructor */
     explicit stack(const container_type& ctnr = container_type())
       : _c(ctnr) {}
+    stack(const stack& other)
+      : _c(other._c) {}
+
+    /* Destructor */
+    ~stack() {}
+
+    /* Assign values to the container adaptor */
+    stack& operator=(const stack& other) {
+      if (this != &other) {
+        _c = other._c;
+      }
+      return (*this);
+    }
 
     /* Test whether container is empty */
     bool empty() const {
